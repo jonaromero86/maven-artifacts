@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>dev.ikm.maven.it</groupId>
+  <artifactId>manifest-it</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <description>An IT verifying manifest plugin</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <manifest.packager.name>IKM</manifest.packager.name>
+    <manifest.origin.version>1.0.0-SNAPSHOT</manifest.origin.version>
+    <manifest.origin.url>ikm.dev</manifest.origin.url>
+    <manifest.origin.namespace>11111-222222-333333-44444</manifest.origin.namespace>
+    <origin.assembly.file>${basedir}/assembly/origin-assembly.xml</origin.assembly.file>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>@project.groupId@</groupId>
+        <artifactId>@project.artifactId@</artifactId>
+        <version>@project.version@</version>
+        <executions>
+          <execution>
+            <id>create-origin-manifest</id>
+            <goals>
+              <goal>generate-manifest-resource</goal>
+            </goals>
+            <configuration>
+              <packagerName>${manifest.packager.name}</packagerName>
+              <originVersion>${manifest.origin.version}</originVersion>
+              <originURL>${manifest.origin.url}</originURL>
+              <originNamespace>${manifest.origin.namespace}</originNamespace>
+              <outputDirectory>${project.build.directory}/origin-sources</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

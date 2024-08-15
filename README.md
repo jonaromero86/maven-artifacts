@@ -12,7 +12,7 @@ Required for running this:
 
 Follow the steps below to build and run Komet on your local machine:
 
-1. Clone the repository from GitHub to your local machine
+1. Clone the repository from GitHub to your local machine 
 
 2. Change local directory to cloned repo location
 

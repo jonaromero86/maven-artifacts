@@ -35,6 +35,3 @@ Windows:
 Technical and non-technical issues can be reported to the GitHub Issue Tracker.
 
 Contributions can be submitted via pull requests. Please check the [contribution guide](doc/how-to-contribute.md) for more details.
-
-
-Test

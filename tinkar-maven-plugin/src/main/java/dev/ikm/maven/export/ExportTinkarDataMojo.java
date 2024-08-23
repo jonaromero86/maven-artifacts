@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.ikm.maven;
+package dev.ikm.maven.export;
 
 import dev.ikm.tinkar.entity.export.ExportEntitiesToProtobufFile;
 import org.apache.maven.plugin.AbstractMojo;
@@ -26,7 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-@Mojo(name = "export-tinkar-data", defaultPhase = LifecyclePhase.INSTALL)
+@Mojo(name = "export-tinkar-data", defaultPhase = LifecyclePhase.PACKAGE)
 public class ExportTinkarDataMojo extends AbstractMojo {
 
     @Parameter(name = "exportDirectory", defaultValue = "${project.build.directory}", required = true)

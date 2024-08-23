@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.ikm.maven;
+package dev.ikm.maven.load;
 
 import dev.ikm.tinkar.entity.load.LoadEntitiesFromProtobufFile;
 import org.apache.maven.plugin.AbstractMojo;
@@ -25,19 +25,19 @@ import org.apache.maven.plugins.annotations.Parameter;
 import java.io.File;
 import java.util.List;
 
-@Mojo(name = "import-starter-data", defaultPhase = LifecyclePhase.COMPILE)
-public class ImportStarterDataMojo extends AbstractMojo {
+@Mojo(name = "load-data", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
+public class LoadDataMojo extends AbstractMojo {
 
-    @Parameter(name = "starterDataFiles", required = true)
-    private List<File> starterDataFiles;
+    @Parameter(name = "dataFiles", required = true)
+    private List<File> dataFiles;
 
     @Override
     public void execute() throws MojoExecutionException {
-        if (starterDataFiles.isEmpty()) {
+        if (dataFiles.isEmpty()) {
             throw new MojoExecutionException("No starter data found");
         }
 
-        starterDataFiles.forEach(file -> {
+        dataFiles.forEach(file -> {
             var loadTask = new LoadEntitiesFromProtobufFile(file);
             loadTask.compute();
         });

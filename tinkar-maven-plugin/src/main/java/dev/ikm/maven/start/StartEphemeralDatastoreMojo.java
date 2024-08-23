@@ -13,33 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.ikm.maven;
+package dev.ikm.maven.start;
 
-import dev.ikm.tinkar.entity.load.LoadEntitiesFromProtobufFile;
+import dev.ikm.tinkar.common.service.CachingService;
+import dev.ikm.tinkar.common.service.PrimitiveData;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
 
-import java.io.File;
-import java.util.List;
-
-@Mojo(name = "import-data", defaultPhase = LifecyclePhase.COMPILE)
-public class ImportDataMojo extends AbstractMojo {
-
-    @Parameter(name = "dataFiles", required = true)
-    private List<File> dataFiles;
+@Mojo(name = "start-ephemeral-datastore", defaultPhase = LifecyclePhase.INITIALIZE)
+public class StartEphemeralDatastoreMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        if (dataFiles.isEmpty()) {
-            throw new MojoExecutionException("No starter data found");
+        try {
+            CachingService.clearAll();
+            PrimitiveData.selectControllerByName("Load Ephemeral Store");
+            PrimitiveData.start();
+        } catch (Exception e) {
+            getLog().error(e.getMessage(), e);
+            throw new MojoExecutionException(e.getMessage(), e);
         }
-
-        dataFiles.forEach(file -> {
-            var loadTask = new LoadEntitiesFromProtobufFile(file);
-            loadTask.compute();
-        });
     }
 }

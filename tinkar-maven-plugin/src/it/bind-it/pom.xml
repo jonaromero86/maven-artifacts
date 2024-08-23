@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>dev.ikm.maven.it</groupId>
-  <artifactId>export-it</artifactId>
+  <artifactId>binding-it</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <description>An IT verifying Export of tinkar data maven plugin</description>
+  <description>An IT verifying Binding of tinkar data maven plugin</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,13 +67,31 @@
             </configuration>
           </execution>
           <execution>
-            <id>export-data</id>
+            <id>export-java-binding</id>
             <goals>
-              <goal>export-tinkar-data</goal>
+              <goal>generate-java-binding</goal>
             </goals>
             <configuration>
-              <exportDirectory>${project.build.directory}</exportDirectory>
-              <fileName>tinkar-export.zip</fileName>
+              <bindingOutputFile>${project.build.directory}/TestBinding.java</bindingOutputFile>
+              <author>Binding Test Author</author>
+              <packageName>dev.ikm.tinkar.binding.test</packageName>
+              <className>TestBinding</className>
+              <namespace>f3051292-ce74-4b2c-b70c-b190594d0532</namespace>
+              <characterReplacements>
+                <characterReplacement>
+                  <character>+</character>
+                  <replacement>_PLUS</replacement>
+                </characterReplacement>
+                <characterReplacements>
+                  <character>/</character>
+                  <replacement>_SLASH_</replacement>
+                </characterReplacements>
+              </characterReplacements>
+              <stampConfiguration>DEVELOPMENT_LATEST</stampConfiguration>
+              <languageConfigurations>
+                <languageConfiguration>US_ENGLISH_REGULAR_NAME</languageConfiguration>
+                <languageConfiguration>US_ENGLISH_FULLY_QUALIFIED_NAME</languageConfiguration>
+              </languageConfigurations>
             </configuration>
           </execution>
           <execution>

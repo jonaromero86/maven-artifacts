@@ -13,25 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.ikm.maven;
+package dev.ikm.maven.test;
 
-import dev.ikm.tinkar.common.service.PrimitiveData;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
-@Mojo(name = "stop-datastore", defaultPhase = LifecyclePhase.INSTALL)
-public class StopDataStoreMojo extends AbstractMojo {
+@Mojo(name = "test-data", defaultPhase = LifecyclePhase.TEST)
 
+public class TestDataMojo extends AbstractMojo {
+	@Override
+	public void execute() throws MojoExecutionException, MojoFailureException {
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        try {
-            PrimitiveData.stop();
-        } catch (Exception e) {
-            getLog().error(e.getMessage(), e);
-            throw new MojoExecutionException(e.getMessage(), e);
-        }
-    }
+	}
 }

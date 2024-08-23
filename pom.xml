@@ -20,9 +20,13 @@
 
     <modules>
         <module>unzip-maven-plugin</module>
-        <module>manifest-maven-plugin</module>
         <module>tinkar-maven-plugin</module>
         <module>tinkar-origin-archetype</module>
+<!--        <module>tinkar-transformation-archetype</module>-->
+<!--        <module>starter-data-archetype</module>-->
+<!--        <module>tinkar-change-set-archetype</module>-->
+<!--        <module>tinkar-binding-archetype</module>-->
+<!--        <module>tinkar-data-archetype</module>-->
     </modules>
 
     <properties>
@@ -36,8 +40,9 @@
         <maven-archetype-packaging.version>3.1.1</maven-archetype-packaging.version>
         <commons-io.version>2.16.1</commons-io.version>
         <tinkar-core.group.id>dev.ikm.tinkar</tinkar-core.group.id>
-        <tinkar-core.version>1.58.0</tinkar-core.version>
+        <tinkar-core.version>1.58.0-SNAPSHOT-local</tinkar-core.version>
         <tinkar-starter-data.version>1.0.0</tinkar-starter-data.version>
+        <tinkar-lang-extension-binding.group.id>dev.ikm.tinkar.ext.binding</tinkar-lang-extension-binding.group.id>
     </properties>
 
     <licenses>
@@ -107,6 +112,11 @@
                 <version>${tinkar-starter-data.version}</version>
                 <classifier>pb</classifier>
                 <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>${tinkar-lang-extension-binding.group.id}</groupId>
+                <artifactId>binding-extension</artifactId>
+                <version>${tinkar-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

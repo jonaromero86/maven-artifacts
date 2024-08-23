@@ -46,6 +46,22 @@
             <groupId>${tinkar-core.group.id}</groupId>
             <artifactId>executor-provider</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${tinkar-lang-extension-binding.group.id}</groupId>
+            <artifactId>binding-extension</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

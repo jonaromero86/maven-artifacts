@@ -13,7 +13,7 @@
 
     <groupId>dev.ikm.maven</groupId>
     <artifactId>maven-artifacts</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Maven Artifacts</name>
@@ -23,6 +23,11 @@
         <module>manifest-maven-plugin</module>
         <module>tinkar-maven-plugin</module>
         <module>tinkar-origin-archetype</module>
+        <module>tinkar-transformation-archetype</module>
+        <module>starter-data-archetype</module>
+        <module>tinkar-change-set-archetype</module>
+        <module>tinkar-binding-archetype</module>
+        <module>tinkar-data-archetype</module>
     </modules>
 
     <properties>
@@ -36,7 +41,7 @@
         <maven-archetype-packaging.version>3.1.1</maven-archetype-packaging.version>
         <commons-io.version>2.16.1</commons-io.version>
         <tinkar-core.group.id>dev.ikm.tinkar</tinkar-core.group.id>
-        <tinkar-core.version>1.58.0</tinkar-core.version>
+        <tinkar-core.version>1.55.0-SNAPSHOT</tinkar-core.version>
         <tinkar-starter-data.version>1.0.0</tinkar-starter-data.version>
     </properties>
 
@@ -108,6 +113,11 @@
                 <classifier>pb</classifier>
                 <type>zip</type>
             </dependency>
+            <dependency>
+                <groupId>${tinkar-core.group.id}</groupId>
+                <artifactId>language-extensions</artifactId>
+                <version>${tinkar-core.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -144,21 +154,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-archetype-plugin</artifactId>
                     <version>${maven-archetype-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>test-jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <outputDirectory>./target/</outputDirectory>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

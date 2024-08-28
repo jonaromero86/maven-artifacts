@@ -15,6 +15,9 @@
  */
 package dev.ikm.maven.transform;
 
+import dev.ikm.tinkar.entity.transaction.Transaction;
+import dev.ikm.tinkar.ext.lang.owl.Rf2OwlToLogicAxiomTransformer;
+import dev.ikm.tinkar.terms.TinkarTerm;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -24,7 +27,14 @@ import org.apache.maven.plugins.annotations.Mojo;
 public class RunOWLTransformerMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
-		//RF2LogicalAxiomTransformation
-		//This doesn't really need nay properties honestly because it's using known starterdata patterns and a transaction
+		Transaction owlTransformTransaction = new Transaction();
+		Rf2OwlToLogicAxiomTransformer rf2OwlToLogicAxiomTransformer = new Rf2OwlToLogicAxiomTransformer(owlTransformTransaction, TinkarTerm.OWL_AXIOM_SYNTAX_PATTERN, TinkarTerm.EL_PLUS_PLUS_STATED_AXIOMS_PATTERN);
+		try {
+			rf2OwlToLogicAxiomTransformer.call();
+		} catch (Exception e) {
+			getLog().error(e);
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
+
 	}
 }

@@ -50,6 +50,10 @@
             <groupId>${tinkar-lang-extension-binding.group.id}</groupId>
             <artifactId>binding-extension</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${tinkar-lang-extension-owl.group.id}</groupId>
+            <artifactId>owl-extension</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>

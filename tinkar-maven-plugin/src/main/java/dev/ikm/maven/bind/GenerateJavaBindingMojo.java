@@ -73,7 +73,7 @@ public class GenerateJavaBindingMojo extends AbstractMojo {
 		Stream.Builder<Entity<? extends EntityVersion>> patternStreamBuilder = Stream.builder();
 		PrimitiveData.get().forEachConceptNid(nid -> conceptStreamBuilder.add(EntityService.get().getEntityFast(nid)));
 		PrimitiveData.get().forEachPatternNid(nid -> patternStreamBuilder.add(EntityService.get().getEntityFast(nid)));
-		String className = bindingOutputFile.toPath().getFileName().toString();
+		String className = bindingOutputFile.toPath().getFileName().toString().replace(".java", "");
 		UUID namespaceUUID = null;
 
 		//Check for correctly formed class name based on java file name

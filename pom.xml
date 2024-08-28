@@ -23,6 +23,11 @@
         <module>manifest-maven-plugin</module>
         <module>tinkar-maven-plugin</module>
         <module>tinkar-origin-archetype</module>
+        <module>tinkar-transformation-archetype</module>
+        <module>starter-data-archetype</module>
+        <module>tinkar-change-set-archetype</module>
+        <module>tinkar-binding-archetype</module>
+        <module>tinkar-data-archetype</module>
     </modules>
 
     <properties>
@@ -34,10 +39,14 @@
         <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
         <maven-archetype-plugin.version>3.2.1</maven-archetype-plugin.version>
         <maven-archetype-packaging.version>3.1.1</maven-archetype-packaging.version>
+        <maven.wrapper-plugin.version>3.2.0</maven.wrapper-plugin.version>
+        <maven.dependency-plugin.version>3.8.0</maven.dependency-plugin.version>
+        <maven.install-plugin.version>3.1.2</maven.install-plugin.version>
         <commons-io.version>2.16.1</commons-io.version>
         <tinkar-core.group.id>dev.ikm.tinkar</tinkar-core.group.id>
-        <tinkar-core.version>1.58.0</tinkar-core.version>
+        <tinkar-core.version>1.56.0</tinkar-core.version>
         <tinkar-starter-data.version>1.0.0</tinkar-starter-data.version>
+        <nexus-staging.version>1.6.13</nexus-staging.version>
     </properties>
 
     <licenses>
@@ -47,12 +56,28 @@
         </license>
     </licenses>
 
+    <scm>
+        <url>http://www.github.com/ikmdev/maven-artifacts_test</url>
+    </scm>
+
+    <developers>
+        <!-- OSSRH Related Developer (Start) -->
+        <developer>
+            <id>ikmdev</id>
+            <name>IKM Development Team</name>
+            <email>support@ikm.dev</email>
+        </developer>
+        <!-- OSSRH Related Developer (End) -->
+
+    </developers>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
                 <version>${maven-plugin-api.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugin-tools</groupId>
@@ -108,12 +133,22 @@
                 <classifier>pb</classifier>
                 <type>zip</type>
             </dependency>
+            <dependency>
+                <groupId>${tinkar-core.group.id}</groupId>
+                <artifactId>language-extensions</artifactId>
+                <version>${tinkar-core.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven.install-plugin.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
@@ -147,18 +182,18 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>test-jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <outputDirectory>./target/</outputDirectory>
-                    </configuration>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven.dependency-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.wrapper</groupId>
+                    <artifactId>maven-wrapper</artifactId>
+                    <version>${maven.wrapper-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

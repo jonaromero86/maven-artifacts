@@ -40,12 +40,9 @@
         <maven.install-plugin.version>3.1.2</maven.install-plugin.version>
         <maven-archetype-plugin.version>3.2.1</maven-archetype-plugin.version>
         <maven-archetype-packaging.version>3.1.1</maven-archetype-packaging.version>
-        <maven.wrapper-plugin.version>3.2.0</maven.wrapper-plugin.version>
-        <maven.dependency-plugin.version>3.8.0</maven.dependency-plugin.version>
-        <maven.install-plugin.version>3.1.2</maven.install-plugin.version>
         <commons-io.version>2.16.1</commons-io.version>
         <tinkar-core.group.id>dev.ikm.tinkar</tinkar-core.group.id>
-        <tinkar-core.version>1.56.0</tinkar-core.version>
+        <tinkar-core.version>1.66.0</tinkar-core.version>
         <maven.wrapper-plugin.version>3.2.0</maven.wrapper-plugin.version>
         <maven.dependency-plugin.version>3.8.0</maven.dependency-plugin.version>
         <tinkar-starter-data.version>1.0.0</tinkar-starter-data.version>

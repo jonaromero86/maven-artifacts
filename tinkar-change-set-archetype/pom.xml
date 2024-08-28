@@ -8,7 +8,7 @@
     </parent>
     <artifactId>tinkar-change-set-archetype</artifactId>
     <name>Tinkar Change Set Archetype</name>
-    <packaging>maven-archetype</packaging>
+    <packaging>pom</packaging>
 
     <description>
         Tinkar Change Set Archetype is a Maven project that enables me to publish arbitrary change sets to Nexus.

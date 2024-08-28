@@ -8,7 +8,7 @@
     </parent>
     <artifactId>tinkar-data-archetype</artifactId>
     <name>Tinkar Data Archetype</name>
-    <packaging>maven-archetype</packaging>
+    <packaging>pom</packaging>
 
     <description>
         Tinkar Data Archetype is a Maven project that creates all data related archetype Poms.

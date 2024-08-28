@@ -11,7 +11,7 @@
 
     <groupId>dev.ikm.maven</groupId>
     <artifactId>starter-data-archetype</artifactId>
-    <packaging>maven-archetype</packaging>
+    <packaging>pom</packaging>
 
     <name>starter-data-archetype</name>
 

@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-@Mojo(name = "start-spinedarray-datastore", defaultPhase = LifecyclePhase.INITIALIZE)
+@Mojo(name = "start-spinedarray-datastore", defaultPhase = LifecyclePhase.INSTALL)
 public class StartSpinedArrayDatastoreMojo extends AbstractMojo {
 
     @Parameter(name = "datastoreDirectory", defaultValue = "${project.build.directory}", readonly = true)

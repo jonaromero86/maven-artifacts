@@ -25,7 +25,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import java.io.File;
 import java.util.List;
 
-@Mojo(name = "import-starter-data", defaultPhase = LifecyclePhase.COMPILE)
+@Mojo(name = "import-starter-data", defaultPhase = LifecyclePhase.INSTALL)
 public class ImportStarterDataMojo extends AbstractMojo {
 
     @Parameter(name = "starterDataFiles", required = true)

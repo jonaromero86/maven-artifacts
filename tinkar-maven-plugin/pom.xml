@@ -7,7 +7,7 @@
     <parent>
         <groupId>dev.ikm.maven</groupId>
         <artifactId>maven-artifacts</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>tinkar-maven-plugin</artifactId>
@@ -47,11 +47,11 @@
             <artifactId>executor-provider</artifactId>
         </dependency>
         <dependency>
-            <groupId>${tinkar-lang-extension-binding.group.id}</groupId>
+            <groupId>dev.ikm.tinkar.ext.binding</groupId>
             <artifactId>binding-extension</artifactId>
         </dependency>
         <dependency>
-            <groupId>${tinkar-lang-extension-owl.group.id}</groupId>
+            <groupId>dev.ikm.tinkar.ext.owl</groupId>
             <artifactId>owl-extension</artifactId>
         </dependency>
 

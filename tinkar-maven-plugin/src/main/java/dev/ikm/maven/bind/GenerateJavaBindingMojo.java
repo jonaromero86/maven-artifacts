@@ -18,6 +18,7 @@ package dev.ikm.maven.bind;
 import dev.ikm.maven.bind.config.CharacterReplacement;
 import dev.ikm.maven.bind.config.LanguageConfiguration;
 import dev.ikm.maven.bind.config.StampConfiguration;
+import dev.ikm.maven.common.DatastoreProxy;
 import dev.ikm.tinkar.common.service.PrimitiveData;
 import dev.ikm.tinkar.coordinate.language.LanguageCoordinateRecord;
 import dev.ikm.tinkar.coordinate.language.calculator.LanguageCalculator;
@@ -69,73 +70,78 @@ public class GenerateJavaBindingMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
-		Stream.Builder<Entity<? extends EntityVersion>> conceptStreamBuilder = Stream.builder();
-		Stream.Builder<Entity<? extends EntityVersion>> patternStreamBuilder = Stream.builder();
-		PrimitiveData.get().forEachConceptNid(nid -> conceptStreamBuilder.add(EntityService.get().getEntityFast(nid)));
-		PrimitiveData.get().forEachPatternNid(nid -> patternStreamBuilder.add(EntityService.get().getEntityFast(nid)));
-		String className = bindingOutputFile.toPath().getFileName().toString().replace(".java", "");
-		UUID namespaceUUID = null;
+		try(DatastoreProxy datastoreProxy = new DatastoreProxy()) {
+			Stream.Builder<Entity<? extends EntityVersion>> conceptStreamBuilder = Stream.builder();
+			Stream.Builder<Entity<? extends EntityVersion>> patternStreamBuilder = Stream.builder();
+			PrimitiveData.get().forEachConceptNid(nid -> conceptStreamBuilder.add(EntityService.get().getEntityFast(nid)));
+			PrimitiveData.get().forEachPatternNid(nid -> patternStreamBuilder.add(EntityService.get().getEntityFast(nid)));
+			String className = bindingOutputFile.toPath().getFileName().toString().replace(".java", "");
+			UUID namespaceUUID = null;
 
-		//Check for correctly formed class name based on java file name
-		if (className.contains(" ")) {
-			throw new MojoExecutionException("Binding output file name contains spaces");
-		}
-
-		//Check for correctly formed package name
-		if (!packageName.contains(".")) {
-			throw new MojoExecutionException("Package Name malformed and doesn't contain '.'");
-		}
-
-		//Check for correctly formed namespace input
-		try {
-			if (namespace.isEmpty()) {
-				namespaceUUID = UUID.randomUUID();
-			} else {
-				namespaceUUID = UUID.fromString(namespace);
+			//Check for correctly formed class name based on java file name
+			if (className.contains(" ")) {
+				throw new MojoExecutionException("Binding output file name contains spaces");
 			}
-		} catch (IllegalArgumentException e) {
-			getLog().error(e.getMessage());
-			throw new MojoExecutionException(e.getMessage());
-		}
 
-		try (DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(bindingOutputFile)))) {
-			final StampCalculator stampCalculator = stampConfiguration.getStampCoordinateRecord().stampCalculator();
-			MutableList<LanguageCoordinateRecord> languageCoordinateRecords = Lists.mutable.empty();
-			languageConfigurations.stream().map(LanguageConfiguration::getLanguageCoordinateRecord).forEach(languageCoordinateRecords::add);
+			//Check for correctly formed package name
+			if (!packageName.contains(".")) {
+				throw new MojoExecutionException("Package Name malformed and doesn't contain '.'");
+			}
+
+			//Check for correctly formed namespace input
+			try {
+				if (namespace.isEmpty()) {
+					namespaceUUID = UUID.randomUUID();
+				} else {
+					namespaceUUID = UUID.fromString(namespace);
+				}
+			} catch (IllegalArgumentException e) {
+				getLog().error(e.getMessage());
+				throw new MojoExecutionException(e.getMessage());
+			}
+
+			try (DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(bindingOutputFile)))) {
+				final StampCalculator stampCalculator = stampConfiguration.getStampCoordinateRecord().stampCalculator();
+				MutableList<LanguageCoordinateRecord> languageCoordinateRecords = Lists.mutable.empty();
+				languageConfigurations.stream().map(LanguageConfiguration::getLanguageCoordinateRecord).forEach(languageCoordinateRecords::add);
 
 
-			final LanguageCalculator languageCalculator = LanguageCalculatorWithCache.getCalculator(
-					stampConfiguration.getStampCoordinateRecord(),
-					languageCoordinateRecords.toImmutableList());
+				final LanguageCalculator languageCalculator = LanguageCalculatorWithCache.getCalculator(
+						stampConfiguration.getStampCoordinateRecord(),
+						languageCoordinateRecords.toImmutableList());
 
-			GenerateJavaBindingTask generateJavaBindingTask = new GenerateJavaBindingTask(
-					conceptStreamBuilder.build(),
-					patternStreamBuilder.build(),
-					Stream.empty(),
-					author,
-					packageName,
-					className,
-					namespaceUUID,
-					interpolationConsumer -> {
-						try {
-							dataOutputStream.writeBytes(interpolationConsumer);
-						} catch (IOException e) {
-							throw new RuntimeException(e);
-						}
-					},
-					new BindingHelper(languageCalculator, stampCalculator, fqn -> {
-						AtomicReference<String> fqnRef = new AtomicReference<>(fqn);
-						characterReplacements.forEach(characterReplacement -> {
-							if (fqn.contains(characterReplacement.getCharacter())) {
-								String newFQN = fqn.replace(characterReplacement.getCharacter(), characterReplacement.getReplacement());
-								fqnRef.set(newFQN);
+				GenerateJavaBindingTask generateJavaBindingTask = new GenerateJavaBindingTask(
+						conceptStreamBuilder.build(),
+						patternStreamBuilder.build(),
+						Stream.empty(),
+						author,
+						packageName,
+						className,
+						namespaceUUID,
+						interpolationConsumer -> {
+							try {
+								dataOutputStream.writeBytes(interpolationConsumer);
+							} catch (IOException e) {
+								throw new RuntimeException(e);
 							}
-						});
-						return fqnRef.get();
-					})
-			);
+						},
+						new BindingHelper(languageCalculator, stampCalculator, fqn -> {
+							AtomicReference<String> fqnRef = new AtomicReference<>(fqn);
+							characterReplacements.forEach(characterReplacement -> {
+								if (fqn.contains(characterReplacement.getCharacter())) {
+									String newFQN = fqn.replace(characterReplacement.getCharacter(), characterReplacement.getReplacement());
+									fqnRef.set(newFQN);
+								}
+							});
+							return fqnRef.get();
+						})
+				);
 
-			generateJavaBindingTask.call();
+				generateJavaBindingTask.call();
+			} catch (Exception e) {
+				getLog().error(e);
+				throw new MojoExecutionException(e.getMessage(), e);
+			}
 		} catch (Exception e) {
 			getLog().error(e);
 			throw new MojoExecutionException(e.getMessage(), e);

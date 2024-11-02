@@ -7,7 +7,7 @@
     <parent>
         <groupId>dev.ikm.build</groupId>
         <artifactId>java-parent</artifactId>
-        <version>1.49.0</version>
+        <version>1.53.0</version>
         <relativePath />
     </parent>
 
@@ -40,7 +40,7 @@
         <maven-archetype-packaging.version>3.1.1</maven-archetype-packaging.version>
         <commons-io.version>2.16.1</commons-io.version>
         <tinkar-core.group.id>dev.ikm.tinkar</tinkar-core.group.id>
-        <tinkar-core.version>1.69.0</tinkar-core.version>
+        <tinkar-core.version>1.73.0-SNAPSHOT</tinkar-core.version>
         <tinkar-starter-data.version>1.0.0</tinkar-starter-data.version>
     </properties>
 
@@ -120,6 +120,17 @@
             <dependency>
                 <groupId>dev.ikm.tinkar.ext.owl</groupId>
                 <artifactId>owl-extension</artifactId>
+                <version>${tinkar-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${tinkar-core.group.id}</groupId>
+                <artifactId>reasoner-elk-owl</artifactId>
+                <version>${tinkar-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${tinkar-core.group.id}</groupId>
+                <artifactId>reasoner-elk-snomed</artifactId>
                 <version>${tinkar-core.version}</version>
             </dependency>
         </dependencies>

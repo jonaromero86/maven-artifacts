@@ -15,17 +15,19 @@
  */
 package dev.ikm.maven.load;
 
+import dev.ikm.maven.common.DatastoreProxy;
 import dev.ikm.tinkar.entity.load.LoadEntitiesFromProtobufFile;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
 import java.util.List;
 
-@Mojo(name = "load-data", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
+@Mojo(name = "load-data",requiresDependencyResolution = ResolutionScope.RUNTIME_PLUS_SYSTEM, defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class LoadDataMojo extends AbstractMojo {
 
     @Parameter(name = "dataFiles", required = true)
@@ -37,9 +39,15 @@ public class LoadDataMojo extends AbstractMojo {
             throw new MojoExecutionException("No starter data found");
         }
 
-        dataFiles.forEach(file -> {
-            var loadTask = new LoadEntitiesFromProtobufFile(file);
-            loadTask.compute();
-        });
+        try(DatastoreProxy datastoreProxy = new DatastoreProxy()){
+            datastoreProxy.start();
+            dataFiles.forEach(file -> {
+                var loadTask = new LoadEntitiesFromProtobufFile(file);
+                loadTask.compute();
+            });
+        } catch (Exception e) {
+            getLog().error(e);
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
     }
 }

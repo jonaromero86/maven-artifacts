@@ -47,15 +47,6 @@
         <version>@project.version@</version>
         <executions>
           <execution>
-            <id>start-datastore</id>
-            <goals>
-              <goal>start-spinedarray-datastore</goal>
-            </goals>
-            <configuration>
-              <datastoreDirectory>${project.build.directory}/datastore</datastoreDirectory>
-            </configuration>
-          </execution>
-          <execution>
             <id>load-data</id>
             <goals>
               <goal>load-data</goal>
@@ -65,12 +56,6 @@
                 <dataFile>${project.build.directory}/data/tinkar-starter-data-reasoned-@tinkar-starter-data.version@-pb.zip</dataFile>
               </dataFiles>
             </configuration>
-          </execution>
-          <execution>
-            <id>stop-datastore</id>
-            <goals>
-              <goal>stop-datastore</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>

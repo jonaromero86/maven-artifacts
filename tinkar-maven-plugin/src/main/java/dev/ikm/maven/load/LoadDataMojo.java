@@ -15,7 +15,7 @@
  */
 package dev.ikm.maven.load;
 
-import dev.ikm.maven.common.DatastoreProxy;
+import dev.ikm.maven.datastore.proxy.DatastoreProxy;
 import dev.ikm.tinkar.entity.load.LoadEntitiesFromProtobufFile;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -39,8 +39,8 @@ public class LoadDataMojo extends AbstractMojo {
             throw new MojoExecutionException("No starter data found");
         }
 
-        try(DatastoreProxy datastoreProxy = new DatastoreProxy()){
-            datastoreProxy.start();
+        try(DatastoreProxy datastoreProxy = new DatastoreProxy()) {
+            datastoreProxy.open();
             dataFiles.forEach(file -> {
                 var loadTask = new LoadEntitiesFromProtobufFile(file);
                 loadTask.compute();

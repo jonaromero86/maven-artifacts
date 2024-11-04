@@ -15,7 +15,7 @@
  */
 package dev.ikm.maven.export;
 
-import dev.ikm.maven.common.DatastoreProxy;
+import dev.ikm.maven.datastore.proxy.DatastoreProxy;
 import dev.ikm.tinkar.entity.export.ExportEntitiesToProtobufFile;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -24,7 +24,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 
 @Mojo(name = "export-tinkar-data", defaultPhase = LifecyclePhase.PACKAGE)
@@ -39,7 +38,7 @@ public class ExportTinkarDataMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
         try (DatastoreProxy databaseDelegate = new DatastoreProxy()){
-            databaseDelegate.start();
+            databaseDelegate.open();
 
             if (!exportDirectory.isDirectory()) {
                 Files.createDirectories(exportDirectory.toPath());

@@ -1,4 +1,4 @@
-package dev.ikm.maven.common;
+package dev.ikm.maven.datastore.proxy;
 
 import dev.ikm.tinkar.common.service.CachingService;
 import dev.ikm.tinkar.common.service.PrimitiveData;
@@ -17,15 +17,16 @@ public class DatastoreProxy implements Closeable {
     private static final Logger LOG = LoggerFactory.getLogger(DatastoreProxy.class);
     private final File datastoreDirectory = new File(System.getProperty("project.build.directory"), "datastore");
 
-    public boolean start(Supplier<Boolean> startCriteria) {
-        boolean canStart = startCriteria.get();
-        if (canStart) {
-            start();
+    public void open(Supplier<Boolean> pluginExecutionCriteria) {
+        open();
+        boolean canExecute = pluginExecutionCriteria.get();
+        if (!canExecute) {
+            LOG.error("Can't execute plugin based on open criteria parameter");
+            throw new RuntimeException("Can't execute plugin based on open criteria parameter");
         }
-        return canStart;
     }
 
-    public void start() {
+    public void open() {
         try {
             if (!datastoreDirectory.exists()) {
                 Files.createDirectories(datastoreDirectory.toPath());

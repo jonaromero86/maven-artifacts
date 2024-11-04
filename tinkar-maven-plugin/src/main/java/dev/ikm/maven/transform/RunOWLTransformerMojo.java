@@ -15,7 +15,7 @@
  */
 package dev.ikm.maven.transform;
 
-import dev.ikm.maven.common.DatastoreProxy;
+import dev.ikm.maven.datastore.proxy.DatastoreProxy;
 import dev.ikm.tinkar.entity.transaction.Transaction;
 import dev.ikm.tinkar.ext.lang.owl.Rf2OwlToLogicAxiomTransformer;
 import dev.ikm.tinkar.terms.TinkarTerm;

@@ -7,7 +7,7 @@
     <parent>
         <groupId>dev.ikm.build</groupId>
         <artifactId>java-parent</artifactId>
-        <version>1.47.0</version>
+        <version>1.53.0</version>
         <relativePath />
     </parent>
 
@@ -20,7 +20,6 @@
 
     <modules>
         <module>unzip-maven-plugin</module>
-        <module>manifest-maven-plugin</module>
         <module>tinkar-maven-plugin</module>
         <module>tinkar-origin-archetype</module>
         <module>tinkar-transformation-archetype</module>
@@ -28,25 +27,22 @@
         <module>tinkar-change-set-archetype</module>
         <module>tinkar-binding-archetype</module>
         <module>tinkar-data-archetype</module>
+        <module>datastore-proxy</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-plugin-plugin.version>3.12.0</maven-plugin-plugin.version>
+        <maven-plugin-plugin.version>3.13.0</maven-plugin-plugin.version>
         <maven-plugin-annotations.version>3.13.0</maven-plugin-annotations.version>
         <maven-plugin-api.version>3.9.7</maven-plugin-api.version>
         <maven-invoker-plugin.version>3.7.0</maven-invoker-plugin.version>
-        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
-        <maven.install-plugin.version>3.1.2</maven.install-plugin.version>
+        <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
         <maven-archetype-plugin.version>3.2.1</maven-archetype-plugin.version>
         <maven-archetype-packaging.version>3.1.1</maven-archetype-packaging.version>
         <commons-io.version>2.16.1</commons-io.version>
         <tinkar-core.group.id>dev.ikm.tinkar</tinkar-core.group.id>
-        <tinkar-core.version>1.66.0</tinkar-core.version>
-        <maven.wrapper-plugin.version>3.2.0</maven.wrapper-plugin.version>
-        <maven.dependency-plugin.version>3.8.0</maven.dependency-plugin.version>
+        <tinkar-core.version>1.77.0</tinkar-core.version>
         <tinkar-starter-data.version>1.0.0</tinkar-starter-data.version>
-        <nexus-staging.version>1.6.13</nexus-staging.version>
     </properties>
 
     <licenses>
@@ -56,28 +52,12 @@
         </license>
     </licenses>
 
-    <scm>
-        <url>http://www.github.com/ikmdev/maven-artifacts</url>
-    </scm>
-
-    <developers>
-        <!-- OSSRH Related Developer (Start) -->
-        <developer>
-            <id>ikmdev</id>
-            <name>IKM Development Team</name>
-            <email>support@ikm.dev</email>
-        </developer>
-        <!-- OSSRH Related Developer (End) -->
-
-    </developers>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
                 <version>${maven-plugin-api.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugin-tools</groupId>
@@ -134,9 +114,30 @@
                 <type>zip</type>
             </dependency>
             <dependency>
-                <groupId>${tinkar-core.group.id}</groupId>
-                <artifactId>language-extensions</artifactId>
+                <groupId>dev.ikm.tinkar.ext.binding</groupId>
+                <artifactId>binding-extension</artifactId>
                 <version>${tinkar-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.ikm.tinkar.ext.owl</groupId>
+                <artifactId>owl-extension</artifactId>
+                <version>${tinkar-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${tinkar-core.group.id}</groupId>
+                <artifactId>reasoner-elk-owl</artifactId>
+                <version>${tinkar-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${tinkar-core.group.id}</groupId>
+                <artifactId>reasoner-elk-snomed</artifactId>
+                <version>${tinkar-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.ikm.maven</groupId>
+                <artifactId>datastore-proxy</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -144,11 +145,6 @@
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>${maven.install-plugin.version}</version>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
@@ -179,21 +175,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-archetype-plugin</artifactId>
                     <version>${maven-archetype-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven.dependency-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.wrapper</groupId>
-                    <artifactId>maven-wrapper</artifactId>
-                    <version>${maven.wrapper-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${maven-deploy-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

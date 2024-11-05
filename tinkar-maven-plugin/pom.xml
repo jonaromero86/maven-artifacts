@@ -46,6 +46,37 @@
             <groupId>${tinkar-core.group.id}</groupId>
             <artifactId>executor-provider</artifactId>
         </dependency>
+        <dependency>
+            <groupId>dev.ikm.tinkar.ext.binding</groupId>
+            <artifactId>binding-extension</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.ikm.tinkar.ext.owl</groupId>
+            <artifactId>owl-extension</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>${tinkar-core.group.id}</groupId>
+            <artifactId>reasoner-elk-owl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${tinkar-core.group.id}</groupId>
+            <artifactId>reasoner-elk-snomed</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.ikm.maven</groupId>
+            <artifactId>datastore-proxy</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

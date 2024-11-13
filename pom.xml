@@ -27,7 +27,6 @@
         <module>tinkar-change-set-archetype</module>
         <module>tinkar-binding-archetype</module>
         <module>tinkar-data-archetype</module>
-        <module>datastore-proxy</module>
     </modules>
 
     <properties>
@@ -133,11 +132,6 @@
                 <groupId>${tinkar-core.group.id}</groupId>
                 <artifactId>reasoner-elk-snomed</artifactId>
                 <version>${tinkar-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>dev.ikm.maven</groupId>
-                <artifactId>datastore-proxy</artifactId>
-                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

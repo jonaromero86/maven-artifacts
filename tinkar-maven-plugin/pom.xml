@@ -64,6 +64,10 @@
             <artifactId>reasoner-elk-snomed</artifactId>
         </dependency>
         <dependency>
+            <groupId>${tinkar-core.group.id}</groupId>
+            <artifactId>reasoner-hybrid</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>

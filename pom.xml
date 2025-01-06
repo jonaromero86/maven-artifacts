@@ -40,7 +40,7 @@
         <maven-archetype-packaging.version>3.1.1</maven-archetype-packaging.version>
         <commons-io.version>2.16.1</commons-io.version>
         <tinkar-core.group.id>dev.ikm.tinkar</tinkar-core.group.id>
-        <tinkar-core.version>1.77.0</tinkar-core.version>
+        <tinkar-core.version>1.80.0</tinkar-core.version>
         <tinkar-starter-data.version>1.0.0</tinkar-starter-data.version>
     </properties>
 
@@ -131,6 +131,11 @@
             <dependency>
                 <groupId>${tinkar-core.group.id}</groupId>
                 <artifactId>reasoner-elk-snomed</artifactId>
+                <version>${tinkar-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${tinkar-core.group.id}</groupId>
+                <artifactId>reasoner-hybrid</artifactId>
                 <version>${tinkar-core.version}</version>
             </dependency>
         </dependencies>

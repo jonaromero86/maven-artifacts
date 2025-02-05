@@ -35,9 +35,6 @@ public class RunReasonerMojo extends SimpleTinkarMojo {
 	@Parameter(property = "reasonerType", defaultValue = "ElkOwlReasoner")
 	String reasonerType;
 
-	@Parameter(property = "reinferAllHierarchy", defaultValue = "false")
-	String reinferAllHierarchy;
-
 	@Override
 	public void run() throws Exception {
 		List<ReasonerService> rss = PluggableService.load(ReasonerService.class).stream().map(ServiceLoader.Provider::get).filter(reasoner -> reasoner.getName().contains(reasonerType))
@@ -53,8 +50,10 @@ public class RunReasonerMojo extends SimpleTinkarMojo {
 			rs.loadData();
 			// Compute
 			rs.computeInferences();
-			// Process Results
-			ClassifierResults results = rs.processResults(null, Boolean.parseBoolean(reinferAllHierarchy));
+			// Build NNF
+			rs.buildNecessaryNormalForm();
+			// Write inferred results
+			ClassifierResults results = rs.writeInferredResults();
 
 			getLog().info("After Size of ConceptSet: " + rs.getReasonerConceptSet().size());
 			getLog().info("ClassifierResults: inferred changes size " + results.getConceptsWithInferredChanges().size());

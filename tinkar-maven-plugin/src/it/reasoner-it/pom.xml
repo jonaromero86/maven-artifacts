@@ -68,9 +68,6 @@
                         <goals>
                             <goal>run-full-reasoner</goal>
                         </goals>
-                        <configuration>
-                            <reinferAllHierarchy>true</reinferAllHierarchy>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>export-data</id>

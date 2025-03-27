@@ -21,24 +21,39 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.shared.model.fileset.FileSet;
+import org.apache.maven.shared.model.fileset.util.FileSetManager;
 
 import java.io.File;
-import java.util.List;
 
-@Mojo(name = "load-data",requiresDependencyResolution = ResolutionScope.RUNTIME_PLUS_SYSTEM, defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
+@Mojo(name = "load-data", requiresDependencyResolution = ResolutionScope.RUNTIME_PLUS_SYSTEM, defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class LoadDataMojo extends SimpleTinkarMojo {
 
-    @Parameter(name = "dataFiles", required = true)
-    private List<File> dataFiles;
+    private final FileSetManager fileSetManager = new FileSetManager();
+
+    @Parameter(name= "filesets")
+    private FileSet[] filesets;
+
+    @Parameter(name = "fileset")
+    private FileSet fileset;
 
     @Override
     public void run() {
-        if (dataFiles.isEmpty()) {
-            throw new RuntimeException("No data found to load");
+        if (filesets != null) {
+            for (FileSet fileSet : filesets) {
+               loadFileset(fileSet);
+            }
         }
-        dataFiles.forEach(file -> {
-            var loadTask = new LoadEntitiesFromProtobufFile(file);
+        if (fileset != null) {
+           loadFileset(fileset);
+        }
+    }
+
+    private void loadFileset(FileSet fileset) {
+        for (String includeFile : fileSetManager.getIncludedFiles(fileset)) {
+            File pbZip = new File(fileset.getDirectory(), includeFile);
+            var loadTask = new LoadEntitiesFromProtobufFile(pbZip);
             loadTask.compute();
-        });
+        }
     }
 }

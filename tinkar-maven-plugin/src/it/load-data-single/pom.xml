@@ -4,13 +4,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>dev.ikm.maven.it</groupId>
-  <artifactId>load-it</artifactId>
+  <artifactId>load-data-single-it</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <description>An IT verifying Load of Tinkar Data maven plugin</description>
+  <description>An IT verifying Load Single resource of Tinkar Data maven plugin</description>
 
   <properties>
+    <tinkar-starter-data.version>1.1.0</tinkar-starter-data.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -21,7 +22,7 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>copy-test-data</id>
+            <id>download-tinkar-starter-data</id>
             <phase>initialize</phase>
             <goals>
               <goal>copy</goal>
@@ -29,14 +30,16 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>dev.ikm.tinkar.data</groupId>
-                  <artifactId>tinkar-starter-data-reasoned</artifactId>
-                  <version>@tinkar-starter-data.version@</version>
-                  <classifier>pb</classifier>
+                  <groupId>dev.ikm.data.tinkar</groupId>
+                  <artifactId>tinkar-starter-data</artifactId>
+                  <version>${tinkar-starter-data.version}</version>
+                  <classifier>reasoned-pb</classifier>
                   <type>zip</type>
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}/data</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
           </execution>
         </executions>
@@ -52,9 +55,12 @@
               <goal>load-data</goal>
             </goals>
             <configuration>
-              <dataFiles>
-                <dataFile>${project.build.directory}/data/tinkar-starter-data-reasoned-@tinkar-starter-data.version@-pb.zip</dataFile>
-              </dataFiles>
+              <fileset>
+                <directory>${project.build.directory}/data</directory>
+                <includes>
+                  <include>tinkar-starter-data-${tinkar-starter-data.version}-reasoned-pb.zip</include>
+                </includes>
+              </fileset>
             </configuration>
           </execution>
         </executions>

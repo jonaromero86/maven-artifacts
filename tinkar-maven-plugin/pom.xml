@@ -15,6 +15,10 @@
 
     <name>Tinkar Maven Plugin</name>
 
+    <prerequisites>
+        <maven>3.9.9</maven>
+    </prerequisites>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>

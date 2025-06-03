@@ -18,6 +18,7 @@ package dev.ikm.maven.bind;
 import dev.ikm.maven.bind.config.CharacterReplacement;
 import dev.ikm.maven.bind.config.LanguageConfiguration;
 import dev.ikm.maven.bind.config.StampConfiguration;
+import dev.ikm.maven.toolkit.isolated.boundary.IsolatedTinkarMojo;
 import dev.ikm.maven.toolkit.simple.boundary.SimpleTinkarMojo;
 import dev.ikm.tinkar.common.service.PrimitiveData;
 import dev.ikm.tinkar.coordinate.language.LanguageCoordinateRecord;
@@ -35,15 +36,19 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
-@Mojo(name = "generate-java-binding", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
-public class GenerateJavaBindingMojo extends SimpleTinkarMojo {
+@Mojo(name = "generate-java-binding-isolated", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
+public class GenerateJavaBindingIsolatedMojo extends IsolatedTinkarMojo {
 
 	@Parameter(name = "bindingOutputFile", required = true)
 	private File bindingOutputFile;
@@ -65,6 +70,11 @@ public class GenerateJavaBindingMojo extends SimpleTinkarMojo {
 
 	@Parameter(name = "languageConfigurations", required = true)
 	private List<String> languageConfigurations;
+
+	@Override
+	public void handleIsolatedFields() {
+
+	}
 
 	@Override
 	public void run() {

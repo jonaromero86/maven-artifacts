@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>dev.ikm.maven.it</groupId>
-  <artifactId>load-data-directory</artifactId>
+  <artifactId>load-data-directory-isolated</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
@@ -72,9 +72,9 @@
         <version>@project.version@</version>
         <executions>
           <execution>
-            <id>load-data</id>
+            <id>load-data-isolated</id>
             <goals>
-              <goal>load-data</goal>
+              <goal>load-data-isolated</goal>
             </goals>
             <configuration>
               <filesets>

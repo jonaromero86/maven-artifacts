@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>dev.ikm.maven.it</groupId>
-  <artifactId>load-data-directory</artifactId>
+  <artifactId>load-data-multi-isolated</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <description>An IT verifying Load artifacts from directory of Tinkar Data maven plugin</description>
+  <description>An IT verifying Load multiple artifacts (declared) of Tinkar Data maven plugin</description>
 
   <properties>
     <tinkar-starter-data.version>1.1.0</tinkar-starter-data.version>
@@ -72,16 +72,22 @@
         <version>@project.version@</version>
         <executions>
           <execution>
-            <id>load-data</id>
+            <id>load-data-isolated</id>
             <goals>
-              <goal>load-data</goal>
+              <goal>load-data-isolated</goal>
             </goals>
             <configuration>
               <filesets>
                 <fileset>
                   <directory>${project.build.directory}/data</directory>
                   <includes>
-                    <include>*-reasoned-pb.zip</include>
+                    <include>tinkar-example-data-${tinkar-example-data.version}-reasoned-pb.zip</include>
+                  </includes>
+                </fileset>
+                <fileset>
+                  <directory>${project.build.directory}/data</directory>
+                  <includes>
+                    <include>tinkar-starter-data-${tinkar-starter-data.version}-reasoned-pb.zip</include>
                   </includes>
                 </fileset>
               </filesets>

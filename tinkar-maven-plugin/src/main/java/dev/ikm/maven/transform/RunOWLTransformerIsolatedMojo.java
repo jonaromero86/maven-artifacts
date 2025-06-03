@@ -15,6 +15,7 @@
  */
 package dev.ikm.maven.transform;
 
+import dev.ikm.maven.toolkit.isolated.boundary.IsolatedTinkarMojo;
 import dev.ikm.maven.toolkit.simple.boundary.SimpleTinkarMojo;
 import dev.ikm.tinkar.entity.transaction.Transaction;
 import dev.ikm.tinkar.ext.lang.owl.Rf2OwlToLogicAxiomTransformer;
@@ -22,8 +23,14 @@ import dev.ikm.tinkar.terms.TinkarTerm;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
-@Mojo(name = "run-owl-transformer", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
-public class RunOWLTransformerMojo extends SimpleTinkarMojo {
+@Mojo(name = "run-owl-transformer-isolated", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
+public class RunOWLTransformerIsolatedMojo extends IsolatedTinkarMojo {
+
+
+	@Override
+	public void handleIsolatedFields() {
+		//No extra fields to handle
+	}
 
 	@Override
 	public void run() {

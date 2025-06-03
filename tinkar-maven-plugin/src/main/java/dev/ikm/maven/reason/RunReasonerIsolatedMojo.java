@@ -15,6 +15,8 @@
  */
 package dev.ikm.maven.reason;
 
+import dev.ikm.maven.toolkit.isolated.boundary.Isolate;
+import dev.ikm.maven.toolkit.isolated.boundary.IsolatedTinkarMojo;
 import dev.ikm.maven.toolkit.simple.boundary.SimpleTinkarMojo;
 import dev.ikm.tinkar.common.service.PluggableService;
 import dev.ikm.tinkar.coordinate.Calculators;
@@ -29,11 +31,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ServiceLoader;
 
-@Mojo(name = "run-full-reasoner", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
-public class RunReasonerMojo extends SimpleTinkarMojo {
+@Mojo(name = "run-full-reasoner-isolated", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
+public class RunReasonerIsolatedMojo extends IsolatedTinkarMojo {
 
+	@Isolate
 	@Parameter(property = "reasonerType", defaultValue = "ElkSnomedReasoner")
 	String reasonerType;
+
+	@Override
+	public void handleIsolatedFields() {
+		//No fields to handle isolation needs
+	}
 
 	@Override
 	public void run() {

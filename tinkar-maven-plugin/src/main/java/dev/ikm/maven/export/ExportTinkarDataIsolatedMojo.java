@@ -19,8 +19,11 @@ import dev.ikm.maven.export.config.ComponentFilter;
 import dev.ikm.maven.export.config.PublicIdConfig;
 import dev.ikm.maven.toolkit.isolated.boundary.Isolate;
 import dev.ikm.maven.toolkit.isolated.boundary.IsolatedTinkarMojo;
-import dev.ikm.maven.toolkit.simple.boundary.SimpleTinkarMojo;
 import dev.ikm.tinkar.common.id.PublicId;
+import dev.ikm.tinkar.entity.aggregator.DefaultEntityAggregator;
+import dev.ikm.tinkar.entity.aggregator.EntityAggregator;
+import dev.ikm.tinkar.entity.aggregator.InferredEntityAggregatorFilter;
+import dev.ikm.tinkar.entity.aggregator.MembershipEntityAggregator;
 import dev.ikm.tinkar.entity.export.ExportEntitiesToProtobufFile;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -43,6 +46,10 @@ public class ExportTinkarDataIsolatedMojo extends IsolatedTinkarMojo {
     @Isolate
     @Parameter(name = "fileName", defaultValue = "tinkar-export.zip")
     File fileName;
+
+    @Isolate
+    @Parameter(name = "unreasoned", defaultValue = "false")
+    boolean unreasoned;
 
     @Isolate
     @Parameter(name = "filters", defaultValue = "${new ArrayList<ComponentFilter>()}")
@@ -72,11 +79,14 @@ public class ExportTinkarDataIsolatedMojo extends IsolatedTinkarMojo {
 			throw new RuntimeException(e);
 		}
 
+        EntityAggregator entityAggregator = new DefaultEntityAggregator();
 		if (!membershipPublicIds.isEmpty()) {
-            exportTask = new ExportEntitiesToProtobufFile(exportFile, membershipPublicIds);
-        } else {
-            exportTask = new ExportEntitiesToProtobufFile(exportFile);
+            entityAggregator = new MembershipEntityAggregator(membershipPublicIds);
         }
+        if (unreasoned) {
+            entityAggregator = new InferredEntityAggregatorFilter(entityAggregator);
+        }
+        exportTask = new ExportEntitiesToProtobufFile(exportFile, entityAggregator);
         exportTask.compute();
     }
 

@@ -19,7 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-@Mojo(name = "generate-binding", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
+@Mojo(name = "generate-binding", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class GenerateBindingMojo extends TinkarMojo {
 
 	@Isolate

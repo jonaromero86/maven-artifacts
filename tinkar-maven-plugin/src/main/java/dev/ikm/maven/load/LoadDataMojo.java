@@ -48,6 +48,9 @@ public class LoadDataMojo extends TinkarMojo {
 
 	@Override
 	public void run() {
+		if (!isolate) {
+			handleIsolatedFields();
+		}
 		filesToLoad.forEach(file -> {
 			var loadTask = new LoadEntitiesFromProtobufFile(file);
 			loadTask.compute();
